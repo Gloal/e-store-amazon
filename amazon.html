@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="styles/pages/amazon.css" />
   </head>
   <body>
+    <!------------------------------- Header section ------------------------------------------------------->
     <div class="amazon-header">
       <div class="amazon-header-left-section">
         <a href="amazon.html" class="header-link">
@@ -54,13 +55,20 @@
         </a>
       </div>
     </div>
+        <!------------------------------ End of Header section ------------------------------------------------->
+
+        <!----------------------------- Product section -------------------------------------------------------->
 
     <div class="main">
       <div class="products-grid js-products-grid">
       </div>
     </div>
+
+            <!------------------------ End of Product section ------------------------------------------------------>
+
   </body>
-  <script src="data/cart.js"></script>
-  <script src="data/products.js"></script>
-  <script src="scripts/amazon.js"></script>
+
+  <!----Entry Point for program, the restof the scripts will be added through modules------------>
+  <script type="module" src="scripts/amazon.js"></script>
+
 </html>

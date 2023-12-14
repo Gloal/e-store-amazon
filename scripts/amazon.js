@@ -1,3 +1,7 @@
+import {cart, addToCart} from '../data/cart.js';
+import {products} from '../data/products.js';
+import { formatCurrency } from './utils/money.js';
+
 let productsHTML = [];
 
 products.forEach((product) => {
@@ -24,12 +28,11 @@ products.forEach((product) => {
             }</div>
             </div>
 
-            <div class="product-price">$${(product.priceCents / 100).toFixed(
-              2
+            <div class="product-price">$${formatCurrency(product.priceCents)}
             )}</div>
 
             <div class="product-quantity-container">
-            <select>
+            <select class="js-quantity-input">
                 <option selected value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -65,30 +68,33 @@ document.querySelectorAll(".js-add-to-cart").forEach((button) => {
   button.addEventListener("click", () => {
     //add item to cart
     // console.log(event.target.dataset.productId); - if you pass event to function
-    const cartQuantityEl= document.querySelector('.js-cart-quantity')
     const productId = button.dataset.productId;
-    let matchingItem;
+    const productQuantity = Number(document.querySelector(".js-quantity-input").value)
+    addToCart(productId, productQuantity);
+    console.log("productQuantity: "+ productQuantity);
+    updateCartQuantity();
+
+    console.log(cart);
+  });
+});
+
+
+//FIXME: WHY DOES USING NUMBER(OPTION.VALUE) NOT LEAD TO A NUMBER BEING PASSED AS THE VALUE?
+document.querySelectorAll("option").forEach((option) => {
+  option.addEventListener("click", () => {
+    console.log("Option value " + option.value);
+    document.querySelector(".js-quantity-input").value = option.value;
+  });
+});
+
+
+
+function updateCartQuantity(){
+    const cartQuantityEl = document.querySelector(".js-cart-quantity");
     let cartQuantity = 0;
-
-    cart.forEach((item) => {
-      if (productId === item.productId) {
-        matchingItem = item;
-      }
-    });
-
-    if(matchingItem){
-        matchingItem.quantity += 1;
-    }else {
-            let quantity = 1;
-            cart.push({ productId, quantity });
-            console.log("new "+productId);
-    }
-
-    cart.forEach((item) =>{
-        console.log(item.quantity)
-        cartQuantity += item.quantity;
-    });
+    cart.forEach((cartItem) => {
+        console.log(cartItem.quantity);
+        cartQuantity += cartItem.quantity;
+      });
     cartQuantityEl.textContent = cartQuantity;
-    console.log(cart, cartQuantity);
-});
-});
+}
