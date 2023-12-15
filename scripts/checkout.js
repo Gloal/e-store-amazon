@@ -1,25 +1,29 @@
-import { cart, removeFromCart } from '../data/cart.js';
-import { products } from '../data/products.js';
-import { formatCurrency } from './utils/money.js';
+import { cart, removeFromCart } from "../data/cart.js";
+import { products } from "../data/products.js";
+import { formatCurrency } from "./utils/money.js";
 
-//TODO: QUESTION _ WHY DOES THIS 
-//HAVE TO BE INITIALISED TO AN EMPTY STRING 
-//OR ZERO if we are going to += , if not initialized, it is undefined
-let cartHTML = "";
+//TODO: QUESTION _ WHY DOES THIS
+//HAVE TO BE INITIALISED TO AN EMPTY STRING
+//OR ZERO if we are going to += , if not initialized, 
+//it is undefined
 
+function renderCart() {
+    let cartHTML = "";
 
-cart.forEach((item)=>{
+    document.querySelector(".js-order-summary").innerHTML = cartHTML;
+
+  cart.forEach((item) => {
     const productId = item.productId;
     let matchingProduct;
 
-    products.forEach((product)=>{
-        if(productId === product.id){
-            matchingProduct = product;
-        }
-    })
+    products.forEach((product) => {
+      if (productId === product.id) {
+        matchingProduct = product;
+      } 
+    });
 
-    console.log(matchingProduct);
-    cartHTML +=`
+    console.log("Matching product: " + matchingProduct);
+    cartHTML += `
     <div class="cart-item-container">
     <div class="delivery-date">
       Delivery date: Tuesday, June 21
@@ -30,7 +34,7 @@ cart.forEach((item)=>{
         src=${matchingProduct.image}>
 
       <div class="cart-item-details">
-        <div class="product-name">
+        <div class="product-name"> 
           ${matchingProduct.name}
         </div>
         <div class="product-price">
@@ -43,7 +47,7 @@ cart.forEach((item)=>{
           <span class="update-quantity-link link-primary">
             Update
           </span>
-          <span class="delete-quantity-link js-delete-link link-primary" data-product-id="${productId}">
+          <span class="delete-quantity-link js-delete-link link-primary" data-product-id=${productId}>
             Delete
           </span>
         </div>
@@ -95,15 +99,27 @@ cart.forEach((item)=>{
       </div>
     </div>
   </div>
-            `
-})
+            `;
+  });
+
 
 document.querySelector(".js-order-summary").innerHTML = cartHTML;
 
-document.querySelectorAll(".js-delete-link").forEach((link)=>{
-    link.addEventListener('click', () => {
-        const productId = link.dataset.productId
-        removeFromCart(productId);
-        console.log(cart);
-    })
-})
+document.querySelectorAll(".js-delete-link").forEach((link) => {
+    link.addEventListener("click", () => {
+      console.log("delete");
+      const productId = link.dataset.productId;
+      removeFromCart(productId);
+      console.log(cart);
+      renderCart();
+    });
+  });
+}
+
+renderCart();
+
+//FIXME:must be called after render cart- otherwise the buttons will not exist when adding the eventListener
+//FIXME: must turn into funtion cause it only loads once currently - must put it in the function above
+//so that they keey getting event listeners repeatedly added on creation!
+
+

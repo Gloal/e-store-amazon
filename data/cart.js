@@ -1,4 +1,9 @@
-export let cart = [
+export let cart = JSON.parse(localStorage.getItem('cart'));
+
+//if the cart is empty, use this as default
+if(!cart){
+  cart =
+[
   {
     productId: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
     quantity: 4,
@@ -8,6 +13,7 @@ export let cart = [
     quantity: 1,
   },
 ];
+}
 
 export function addToCart(productId, productQuantity) {
   let matchingItem;
@@ -20,11 +26,15 @@ export function addToCart(productId, productQuantity) {
 
   if (matchingItem) {
     matchingItem.quantity += productQuantity;
-  } else {
+  } else {  
     let quantity = productQuantity;
     cart.push({ productId, quantity });
     console.log("new " + productId);
   }
+
+  //once the cart is saved, update localstorage
+  saveToStorage();
+
 }
 
 /**Loop through card and add all 
@@ -36,6 +46,12 @@ export function removeFromCart(productId){
       newCart.push(item);
     }
     cart = newCart;
-
+    //update the cart in localStorage
+    saveToStorage();
   })
+}
+
+function saveToStorage(){
+  console.log("Adding to storage");
+  localStorage.setItem('cart', JSON.stringify(cart));
 }

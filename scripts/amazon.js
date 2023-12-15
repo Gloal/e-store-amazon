@@ -29,7 +29,7 @@ products.forEach((product) => {
             </div>
 
             <div class="product-price">$${formatCurrency(product.priceCents)}
-            )}</div>
+            </div>
 
             <div class="product-quantity-container">
             <select class="js-quantity-input">
@@ -53,11 +53,9 @@ products.forEach((product) => {
             Added
             </div>
 
-            <button class="add-to-cart-button js-add-to-cart button-primary" data-product-id="${
-              product.name
-            }">Add to Cart</button>
+            <button class="add-to-cart-button js-add-to-cart button-primary" data-product-id=${product.id}>Add to Cart</button>
         </div>`;
-  productsHTML += html;
+  productsHTML += html; 
 });
 
 const productGridEl = document.querySelector(".js-products-grid");
@@ -79,14 +77,13 @@ document.querySelectorAll(".js-add-to-cart").forEach((button) => {
 });
 
 
-//FIXME: WHY DOES USING NUMBER(OPTION.VALUE) NOT LEAD TO A NUMBER BEING PASSED AS THE VALUE?
+//FIXME: WHY DOES USING NUMBER(OPTION.VALUE) NOT LEAD TO A NUMBER BEING PASSED AS THE VALUE? - value is stored as a String
 document.querySelectorAll("option").forEach((option) => {
   option.addEventListener("click", () => {
     console.log("Option value " + option.value);
     document.querySelector(".js-quantity-input").value = option.value;
   });
 });
-
 
 
 function updateCartQuantity(){
