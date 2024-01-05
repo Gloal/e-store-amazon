@@ -6,11 +6,13 @@ import { formatCurrency } from "./utils/money.js";
 //HAVE TO BE INITIALISED TO AN EMPTY STRING
 //OR ZERO if we are going to += , if not initialized, 
 //it is undefined
+console.log(dayjs())
 
 function renderCart() {
     let cartHTML = "";
 
     document.querySelector(".js-order-summary").innerHTML = cartHTML;
+
 
   cart.forEach((item) => {
     const productId = item.productId;
@@ -104,7 +106,7 @@ function renderCart() {
 
 
 document.querySelector(".js-order-summary").innerHTML = cartHTML;
-
+updateCheckoutQuantity();
 document.querySelectorAll(".js-delete-link").forEach((link) => {
     link.addEventListener("click", () => {
       console.log("delete");
@@ -116,10 +118,37 @@ document.querySelectorAll(".js-delete-link").forEach((link) => {
   });
 }
 
+const customerInput = ["Howdy", "Partner",5, 2]
+function addClickListeners(item){
+  console.log("Hi "+item)
+}
+
+addClickListeners(...customerInput)
+console.log("this")
+
 renderCart();
 
 //FIXME:must be called after render cart- otherwise the buttons will not exist when adding the eventListener
 //FIXME: must turn into funtion cause it only loads once currently - must put it in the function above
-//so that they keey getting event listeners repeatedly added on creation!
+//so that they keep getting event listeners repeatedly added on creation!
+
+function updateCheckoutQuantity(){
+  const cartQuantityEl = document.querySelector(".js-cart-quantity");
+  let cartQuantity = 0;
+  cart.forEach((cartItem) => {
+      console.log(cartItem.quantity);
+      cartQuantity += cartItem.quantity;
+    });
+  cartQuantityEl.textContent = cartQuantity+ " ITEMS";
+}
 
 
+function getOptionsInput(){
+  const cartQuantityEl = document.querySelector(".js-cart-quantity");
+  let cartQuantity = 0;
+  cart.forEach((cartItem) => {
+      console.log(cartItem.quantity);
+      cartQuantity += cartItem.quantity;
+    });
+  cartQuantityEl.textContent = cartQuantity+ " ITEMS";
+}

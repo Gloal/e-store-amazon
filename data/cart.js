@@ -49,7 +49,7 @@ export function removeFromCart(productId){
     //update the cart in localStorage
     saveToStorage();
   })
-}
+} 
 
 function saveToStorage(){
   console.log("Adding to storage");
