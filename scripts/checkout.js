@@ -6,9 +6,8 @@ import { formatCurrency } from "./utils/money.js";
 //HAVE TO BE INITIALISED TO AN EMPTY STRING
 //OR ZERO if we are going to += , if not initialized, 
 //it is undefined
-console.log(dayjs())
 
-function renderCart() {
+export function renderCart() {
     let cartHTML = "";
 
     document.querySelector(".js-order-summary").innerHTML = cartHTML;
@@ -101,6 +100,7 @@ function renderCart() {
       </div>
     </div>
   </div>
+ 
             `;
   });
 
